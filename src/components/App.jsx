@@ -7,16 +7,29 @@ import React, {Component} from "react";
 export default class App extends Component {
   state = { 
     images:[],
-    search: null,
+    search: '',
     queryPage:1,
     lordMore:false,
-   
-   } 
-   gatSearchxFetch = (search) =>{
-    this.setState({search, queryPage:1, lordMore:true})
-    const item = APIfetch(search, 1).then((hits)=>{
-      console.log(hits)
-    })
+    error:null,
+    loading:false,
+  
+  } 
+  componentDidUpdate(prevProps, prevState){
+  
+  if(prevProps.search !== this.state.search){
+      this.setState({loading:true})
+     // const api = APIfetch()
+      APIfetch().then(response => {
+      if(response.ok) {
+          return response.json()
+      }
+      return Promise.reject(new Error('Нічого не знайдено'))
+  })           
+  .then(images=>this.setState({images}))
+  .catch(error=>this.setState({error}))
+  .finally(()=>this.setState({loading:false}))
+  }
+
     
    }
 
@@ -25,16 +38,18 @@ export default class App extends Component {
    }
 
   render() { 
-   //const {search, error}= this.
+    const {error, loading, images}=this.state
     return (
       <div style={{display: 'grid', gridTemplateColumns: '1fr',
         gridGap: 16, paddingBottom: 24}}
       >
+        {error && <h1>{error.message}</h1>}
+        {loading && <div>Загружаєм....</div>}
         <Searchbar onSubmit={this.handleFormSubmit}/>
-        <ImageGallery images={this.state.search}
+        <ImageGallery images={this.state.images}
         // onImage={}
         />
-        <APIfetch search={this.state.search}/>
+        
       </div>
     )
   }
@@ -42,35 +57,8 @@ export default class App extends Component {
 
 
 
-// componentDidUpdate(prevProps, prevState){
-//    const URL = 'https://pixabay.com/api/';
-//   const API_KEY = '33330220-38622d6f802367b73b86585e9';
-//   if(prevProps.search !== this.props.search){
 
-//       this.setState({loading:true})
-//       fetch(`${URL}?q=${this.props.search}&page=${this.state.queryPage}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-//   ).then(response => {
-//       if(response.ok) {
-//           return response.json();
-//       }
-//       return Promise.reject(new Error('Нічого не знайдено'))
-//   })           
-//   .then(search=>this.setState({search}))
-//   .catch(error=>this.setState({error}))
-//   .finally(()=>this.setState({loading:false}))
-  
-//   }
-// }
-// render() { 
-//   const {error, loading, search}=this.state
-//   return (
-//       <div>
-//       {error && <h1>{error.message}</h1>}
-//       {loading && <div>Загружаєм....</div>}
-//       {}
-//       </div>
-//   )
-// }
+
 
 
 
