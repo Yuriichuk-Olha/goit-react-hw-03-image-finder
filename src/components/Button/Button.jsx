@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import css from 'components/Button/Button.module.css'
-
+// , loadMore
 class Button extends Component {
     render() { 
-        const {onLoadMoreClick, loadMore}= this.props
+        const {onLoadMoreClick}= this.props
         console.log(onLoadMoreClick)
         return (
             <>
