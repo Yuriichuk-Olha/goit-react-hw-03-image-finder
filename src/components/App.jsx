@@ -19,9 +19,9 @@ export default class App extends Component {
       largeImageURL: '',
     }
   } 
-
+// images
   componentDidUpdate(prevProps, prevState){
-  const {search,queryPage,images} = this.state;
+  const {search,queryPage} = this.state;
   if(prevState.search !== this.state.search){
     console.log(prevState.search)
     console.log(this.state.search)
@@ -41,9 +41,9 @@ export default class App extends Component {
   }
  
   }
-
+// ,images,lordMore
   onLoadMoreClick=(prevState)=>{ 
-  const {search,queryPage,images,lordMore} = this.state;
+  const {search,queryPage} = this.state;
   this.setState({lordMore:true})
     const api = APIfetch(search, queryPage).then()
     console.log(api)
@@ -87,14 +87,13 @@ export default class App extends Component {
         images={images} 
         lordMore={lordMore}
         clickImage={this.clickImage}
-        /> )}
-    
+        /> )}  
       </div>
     )
   }
 }
 
-{/* <Button onLoadMore={this.onLoadMore}/> */}
+
 
 
 
