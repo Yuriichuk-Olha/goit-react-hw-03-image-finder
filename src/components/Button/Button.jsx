@@ -3,12 +3,15 @@ import css from 'components/Button/Button.module.css'
 
 class Button extends Component {
     render() { 
-        const {onLoadMoreClick}= this.props
+        const {onLoadMoreClick, loadMore}= this.props
+        console.log(onLoadMoreClick)
         return (
             <>
             <button type='button'
             className={css.Button}
-             onClick={()=>onLoadMoreClick}>
+            // onClick={()=>loadMore}
+             onClick={()=>onLoadMoreClick}
+            >
             Load More
             </button>
             </>

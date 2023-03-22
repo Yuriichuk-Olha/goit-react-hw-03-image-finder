@@ -3,10 +3,10 @@ import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 import Button from "components/Button/Button";
 import css from 'components/ImageGallery/ImageGallery.module.css'
 
-
+// children,
 class ImageGallery extends Component {
     render() { 
-        const {images, clickImages,loadMore, children}= this.props
+        const { loading, images, clickImages,loadMore,   onLoadMoreClick}= this.props
         
         return (
             <>
@@ -23,8 +23,11 @@ class ImageGallery extends Component {
 
               })}
             </ul> 
-            {!loadMore && (<Button onLoadMore={this.props.onLoadMore}/>)} 
-            {children}          
+            {!loading && (<Button 
+            loadMore={loadMore}
+            onLoadMoreClick={onLoadMoreClick}
+            />)} 
+            {/* {children}           */}
         </>
         )
     }

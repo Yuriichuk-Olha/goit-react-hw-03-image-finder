@@ -20,19 +20,19 @@ export default class App extends Component {
     }
   } 
 // images
-  componentDidUpdate(prevProps, prevState){
-  const {search,queryPage} = this.state;
-  if(prevState.search !== this.state.search){
-    console.log(prevState.search)
-    console.log(this.state.search)
+  componentDidUpdate(_, prevState){
+  const {search,queryPage,} = this.state;
+  if(prevState.search !== search){
+    // console.log(prevState.search)
+    // console.log(this.state.search)
 
       this.setState({loading:true})
 
       APIfetch(search, queryPage).then(response => {
-       console.log(response)
-     return this.setState(prevstate=>({
+     //  console.log(response)
+     return this.setState(prevState=>({
 
-      images:[...prevstate.images, ...response.hits],
+      images:[...prevState.images, ...response.hits],
       // queryPage: queryPage +1,
      }))
   }) 
@@ -41,25 +41,34 @@ export default class App extends Component {
   }
  
   }
-// ,images,lordMore
+
   onLoadMoreClick=(prevState)=>{ 
   const {search,queryPage} = this.state;
-  this.setState({lordMore:true})
-    const api = APIfetch(search, queryPage).then()
-    console.log(api)
-   return this.setState((prevState=>({
-      images:[...prevState.images, ...api.hits],
+  // this.setState({lordMore:true})
+    APIfetch(search, queryPage).then(response=>{
+       console.log(response)
+   return this.setState(prevState=>({
+      images:[...prevState.images, ...response.hits],
       queryPage: prevState.queryPage + 1,
-   })
-   ))    
+    }))
+    })
+    .catch(error=>this.setState({error}))
+   .finally(()=>this.setState({loading:false}))
   }
   
+  lordMore=()=>{
+    //if(this.state.queryPage > 0){
+      this.setState(prev=>({queryPage: prev.queryPage + 1}))
+   //}
+    
+  }
+
    handleFormSubmit = search=>{
     this.setState({search, images:[]})
    }
 
-  clickImage=(largeImageURL)=>{
-    console.log(largeImageURL)
+  clickImages=(largeImageURL)=>{
+    //console.log(largeImageURL)
     this.setState({modal:{largeImageURL, showModal:true}})
   }
   closeModal=()=>{
@@ -81,12 +90,13 @@ export default class App extends Component {
         {error && <h1>{error.message}</h1>}
         {loading && <Loader/>}
         
-        {images.length===0 && lordMore}
+        {images.length===0 && loading}
 
-        {images.length>0 && !lordMore && ( <ImageGallery 
-        images={images} 
+        {images.length>0 && !loading && ( <ImageGallery 
+        images={images}   
+        clickImages={this.clickImages}
+        onLoadMoreClick={this.onLoadMoreClick}
         lordMore={lordMore}
-        clickImage={this.clickImage}
         /> )}  
       </div>
     )
