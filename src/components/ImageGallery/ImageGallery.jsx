@@ -1,29 +1,32 @@
 import React, {Component} from "react";
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import Button from "components/Button/Button";
 import css from 'components/ImageGallery/ImageGallery.module.css'
 
-// {id, webformatURL,largeImageURL}
+
 class ImageGallery extends Component {
-    state = {  } 
     render() { 
-        const {images, onImage,}= this.state
+        const {images, clickImages,loadMore, children}= this.props
         
         return (
             <>
-            <ul className={css.gallery}>
-              {/* {images.map(image => {
-                <ImageGalleryItem
-                key={image.id}
-                webformatURL={image.webformatURL}
-                largeImageURL={image.largeImageURL}
-                onImage={onImage}
+            <ul className={css.ImageGallery}>
+
+              {images.map(({id, webformatURL, largeImageURL}) => {
+      
+              return  <ImageGalleryItem
+                key={id}
+                webformatURL={webformatURL}
+                largeImageURL={largeImageURL}
+                clickImages={clickImages}
                 />
-              })} */}
-            </ul>
 
-
-            </>
-        );
+              })}
+            </ul> 
+            {!loadMore && (<Button onLoadMore={this.props.onLoadMore}/>)} 
+            {children}          
+        </>
+        )
     }
 }
  

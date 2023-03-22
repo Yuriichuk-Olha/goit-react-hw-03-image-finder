@@ -5,13 +5,6 @@ class Searchbar extends Component {
   state = {
     search: '',
   }
-//   componentDidMount() {
-//     fatch(
-//       'https://pixabay.com/api/?q=cat&page=1&key=33330220-38622d6f802367b73b86585e9&image_type=photo&orientation=horizontal&per_page=12'
-//     )
-//       .then(response => response.json())
-//       .then(console.log)
-//   }
 
   handleChange=ev=>{
     this.setState({search:ev.currentTarget.value})
@@ -27,14 +20,14 @@ class Searchbar extends Component {
   }
   render() {
     return ( 
-    <header className={css.searchbar}>
-    <form onSubmit={this.handleSubmit} className={css.form}>
-    <button type="submit" className={css.button}>
-      <span className={css.buttonLabel}>Search</span>
+    <header className={css.Searchbar}>
+    <form onSubmit={this.handleSubmit} className={css.SearchForm}>
+    <button type="submit" className={css.SearchFormButton}>
+      <span className={css.SearchFormButtonLabel}>Search</span>
     </button>
 
     <input
-      className={css.input}
+      className={css.SearchFormInput}
       type="text"
       // autoСomplete="off"
       // autoFocus
