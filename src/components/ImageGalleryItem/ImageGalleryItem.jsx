@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import css from '../ImageGalleryItem/ImageGalleryItem.module.css'
 
@@ -12,5 +13,9 @@ export default function ImageGalleryItem({webformatURL,largeImageURL, clickImage
             </li>
 }
 
-
+ImageGalleryItem.propTypes={
+  webformatURL:PropTypes.string.isRequired,
+  largeImageURL:PropTypes.string.isRequired,
+  clickImages:PropTypes.func.isRequired,
+}
 

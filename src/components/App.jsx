@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
+import React, {Component} from "react";
 import Searchbar from '../components/Searchbar/Searchbar';
 import APIfetch from './API/APIfetch'
 import Loader from './Loader/loader';
 import Modal from './Modal/Modal';
-//import Button from './Button/Button';
 import ImageGallery from './ImageGallery/ImageGallery';
-import React, {Component} from "react";
+
 
 export default class App extends Component {
   state = { 
@@ -19,48 +20,27 @@ export default class App extends Component {
       largeImageURL: '',
     }
   } 
-// images
+
   componentDidUpdate(_, prevState){
   const {search,queryPage,} = this.state;
-  if(prevState.search !== search){
+  if(prevState.search !== search || prevState.queryPage !== queryPage){
     // console.log(prevState.search)
     // console.log(this.state.search)
 
       this.setState({loading:true})
 
       APIfetch(search, queryPage).then(response => {
-     //  console.log(response)
      return this.setState(prevState=>({
-
       images:[...prevState.images, ...response.hits],
-      // queryPage: queryPage +1,
      }))
   }) 
   .catch(error=>this.setState({error}))
   .finally(()=>this.setState({loading:false}))
   }
- 
-  }
-
-  onLoadMoreClick=(prevState)=>{ 
-  const {search,queryPage} = this.state;
-  // this.setState({lordMore:true})
-    APIfetch(search, queryPage).then(response=>{
-       console.log(response)
-   return this.setState(prevState=>({
-      images:[...prevState.images, ...response.hits],
-      queryPage: prevState.queryPage + 1,
-    }))
-    })
-    .catch(error=>this.setState({error}))
-   .finally(()=>this.setState({loading:false}))
   }
   
   lordMore=()=>{
-    //if(this.state.queryPage > 0){
-      this.setState(prev=>({queryPage: prev.queryPage + 1}))
-   //}
-    
+      this.setState(prev=>({queryPage: prev.queryPage + 1}))     
   }
 
    handleFormSubmit = search=>{
@@ -68,7 +48,6 @@ export default class App extends Component {
    }
 
   clickImages=(largeImageURL)=>{
-    //console.log(largeImageURL)
     this.setState({modal:{largeImageURL, showModal:true}})
   }
   closeModal=()=>{
@@ -95,59 +74,25 @@ export default class App extends Component {
         {images.length>0 && !loading && ( <ImageGallery 
         images={images}   
         clickImages={this.clickImages}
-        onLoadMoreClick={this.onLoadMoreClick}
+        onLoadMoreClick={this.lordMore}
         lordMore={lordMore}
         /> )}  
+        
       </div>
     )
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* export const App = ({children}) => {
-  return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr',
-        gridGap: 16,
-        paddingBottom: 24,
-      }}
-    >
-      <Searchbar />
-      
-      {children}
-      
-    </div>
-  );
-}; */
-
-// * Стили компонента App
-
-
- // height: '100vh',
-        // display: 'flex',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // fontSize: 40,
-        // color: '#010101'
+App.propTypes={
+  images:PropTypes.array.isRequired,
+  search:PropTypes.string.isRequired,
+  queryPage:PropTypes.number.isRequired,
+  lordMore:PropTypes.bool.isRequired,
+  error:PropTypes.bool.isRequired,
+  loading:PropTypes.bool.isRequired,
+  modal:PropTypes.shape({
+    showModal:PropTypes.bool.isRequired,
+    largeImageURL:PropTypes.string.isRequired
+  })
+}

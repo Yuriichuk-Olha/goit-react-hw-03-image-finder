@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import React, {Component} from "react";
+
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 import Button from "components/Button/Button";
 import css from 'components/ImageGallery/ImageGallery.module.css'
 
-// children,
+
 class ImageGallery extends Component {
     render() { 
         const { loading, images, clickImages,loadMore,   onLoadMoreClick}= this.props
@@ -27,10 +29,18 @@ class ImageGallery extends Component {
             loadMore={loadMore}
             onLoadMoreClick={onLoadMoreClick}
             />)} 
-            {/* {children}           */}
+         
         </>
         )
     }
 }
  
 export default ImageGallery;
+
+ImageGallery.propTypes= {
+  loading:PropTypes.bool.isRequired,
+  images:PropTypes.array.isRequired,
+  clickImages:PropTypes.func.isRequired,
+  loadMore:PropTypes.bool.isRequired,
+  onLoadMoreClick:PropTypes.func.isRequired,
+}

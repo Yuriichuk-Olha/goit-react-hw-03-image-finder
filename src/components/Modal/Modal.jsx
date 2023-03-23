@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from "react";
 import css from 'components/Modal/Modal.module.css'
 
@@ -29,12 +30,18 @@ class Modal extends Component {
     }
         
     render() { 
+        const {largeImageURL} = this.props
         return (
             <div className={css.Overlay} onClick={this.handleBackdropClick}>
-                <div className={css.Modal}><img src={this.props.largeImageURL} alt="" width={900}/></div>
+                <div className={css.Modal}><img src={largeImageURL} alt="" width={1000}/></div>
             </div>
         );
     }
 }
  
 export default Modal;
+
+Modal.propTypes={
+    handleBackdropClick:PropTypes.func.isRequired,
+    largeImageURL:PropTypes.string.isRequired,
+}

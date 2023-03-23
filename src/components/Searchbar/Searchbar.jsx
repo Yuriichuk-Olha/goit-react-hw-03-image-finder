@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from "react";
 import css from 'components/Searchbar/Searchbar.module.css'
 
@@ -11,14 +12,19 @@ class Searchbar extends Component {
   }
 
   handleSubmit =event=> {
+    const {search} = this.state;
+    const {onSubmit} = this.props;
+    
     event.preventDefault();
-    if(this.state.search.trim()===''){
-        return alert('Пустий рядок')
+    if(search.trim()===''){
+        return alert('An empty line')
     }
-    this.props.onSubmit(this.state.search)
+
+    onSubmit(search)
     this.setState({search:''})
   }
   render() {
+    const {search} = this.state
     return ( 
     <header className={css.Searchbar}>
     <form onSubmit={this.handleSubmit} className={css.SearchForm}>
@@ -29,10 +35,10 @@ class Searchbar extends Component {
     <input
       className={css.SearchFormInput}
       type="text"
-      // autoСomplete="off"
-      // autoFocus
+      autoСomplete="off"
+      autoFocus
       placeholder="Search images and photos"
-      value={this.state.search}
+      value={search}
       onChange={this.handleChange}
     />
   </form>
@@ -42,3 +48,7 @@ class Searchbar extends Component {
 }
 
 export default Searchbar;
+
+Searchbar.propTypes={
+  search:PropTypes.string.isRequired,
+}
