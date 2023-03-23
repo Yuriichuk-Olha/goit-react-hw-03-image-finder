@@ -8,7 +8,7 @@ import css from 'components/ImageGallery/ImageGallery.module.css'
 
 class ImageGallery extends Component {
     render() { 
-        const { loading, images, clickImages,loadMore,   onLoadMoreClick}= this.props
+        const { loading, images, clickImages,loadMore, onLoadMoreClick}= this.props
         
         return (
             <>
@@ -25,8 +25,9 @@ class ImageGallery extends Component {
 
               })}
             </ul> 
+            
             {!loading && (<Button 
-            loadMore={loadMore}
+             loadMore={loadMore}
             onLoadMoreClick={onLoadMoreClick}
             />)} 
          
@@ -38,9 +39,9 @@ class ImageGallery extends Component {
 export default ImageGallery;
 
 ImageGallery.propTypes= {
-  loading:PropTypes.bool.isRequired,
-  images:PropTypes.array.isRequired,
-  clickImages:PropTypes.func.isRequired,
-  loadMore:PropTypes.bool.isRequired,
-  onLoadMoreClick:PropTypes.func.isRequired,
+  loading:PropTypes.bool,
+  images:PropTypes.array,
+  clickImages:PropTypes.func,
+  loadMore:PropTypes.bool,
+  onLoadMoreClick:PropTypes.func,
 }

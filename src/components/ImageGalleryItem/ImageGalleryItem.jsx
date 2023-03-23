@@ -14,8 +14,8 @@ export default function ImageGalleryItem({webformatURL,largeImageURL, clickImage
 }
 
 ImageGalleryItem.propTypes={
-  webformatURL:PropTypes.string.isRequired,
-  largeImageURL:PropTypes.string.isRequired,
-  clickImages:PropTypes.func.isRequired,
+  webformatURL:PropTypes.string,
+  largeImageURL:PropTypes.string,
+  clickImages:PropTypes.func,
 }
 

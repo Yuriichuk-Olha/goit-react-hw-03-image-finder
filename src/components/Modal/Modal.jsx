@@ -42,6 +42,6 @@ class Modal extends Component {
 export default Modal;
 
 Modal.propTypes={
-    handleBackdropClick:PropTypes.func.isRequired,
-    largeImageURL:PropTypes.string.isRequired,
+    handleBackdropClick:PropTypes.func,
+    largeImageURL:PropTypes.string,
 }

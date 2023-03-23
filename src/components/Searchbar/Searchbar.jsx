@@ -35,8 +35,8 @@ class Searchbar extends Component {
     <input
       className={css.SearchFormInput}
       type="text"
-      autoСomplete="off"
-      autoFocus
+      // autoСomplete="off"
+      // autoFocus
       placeholder="Search images and photos"
       value={search}
       onChange={this.handleChange}
@@ -50,5 +50,5 @@ class Searchbar extends Component {
 export default Searchbar;
 
 Searchbar.propTypes={
-  search:PropTypes.string.isRequired,
+  search:PropTypes.string,
 }
