@@ -5,15 +5,15 @@ import APIfetch from './API/APIfetch'
 import Loader from './Loader/loader';
 import Modal from './Modal/Modal';
 import ImageGallery from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
 
 
 export default class App extends Component {
   state = { 
     images:[],
     search: '',
-    total:0,
+    total:null,
     queryPage:1,
-    lordMore:false,
     error:null,
     loading:false,
     modal:{
@@ -21,45 +21,29 @@ export default class App extends Component {
       largeImageURL: '',
     }
   } 
-
   componentDidUpdate(_, prevState){
   const {search,queryPage,} = this.state;
   if(prevState.search !== search || prevState.queryPage !== queryPage){
-    // console.log(prevState.search, 'prevSearch')
-    // console.log(prevState.queryPage,'prevQuery')
+      this.setState({loading:true})
 
-    // console.log(this.state.search, 'stateSearch')
-    // console.log(queryPage,'stateQuery')
-
-      APIfetch(search, queryPage).then(response => {
+      APIfetch(search, queryPage).then(response => { 
       
-        //  const total=response.totalHits;
-        //  this.setState({total})
-    // //  this.setState({total})
-    //    console.log(total,'total',queryPage,'queryPage')
-    //this.setState({loading:true})
-    //  console.log(response.totalHits)
-         if(response.totalHits <= 12){
-         return this.setState({loading:false})
-        }
-
         return this.setState(prevState=>({
       images:[...prevState.images, ...response.hits],
-      
+      total:response.totalHits,
       }))
-     
-  
-
+      
     }) 
     .catch(error=>this.setState({error}))
     .finally(()=>this.setState({loading:false}))
     }
   }
   
-  lordMore=()=>{
+  onLoadMore=()=>{   
           this.setState(prev=>({
             queryPage: prev.queryPage + 1,
           }))
+
   }
 
    handleFormSubmit = search=>{
@@ -74,7 +58,14 @@ export default class App extends Component {
   }
 
   render() { 
-    const {error, loading, images, lordMore, modal} = this.state
+    const {total,error, loading, images,  modal} = this.state;
+    
+
+    let loadMore=false;
+    if (images.length < total){
+      console.log(images.length, total)
+      loadMore = true;
+    }
     
     
     return (
@@ -88,16 +79,17 @@ export default class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit}/>     
         {error && <h1>{error.message}</h1>}
         {loading && <Loader/>}
+        {images.length===0 && loading }
+
         
-        
-        {images.length===0 && loading}
-       
+
         { images.length>0 && !loading && ( <ImageGallery 
         images={images}   
         clickImages={this.clickImages}
-        onLoadMoreClick={this.lordMore}
-        lordMore={lordMore}
-        /> )}  
+        loadMore={loadMore}
+        /> )} 
+        {loadMore && (
+        <Button onLoadMoreClick={this.onLoadMore}/>)} 
         
       </div>
     )

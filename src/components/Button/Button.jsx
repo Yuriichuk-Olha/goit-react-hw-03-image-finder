@@ -23,5 +23,5 @@ class Button extends Component {
 export default Button;
 
 Button.propTypes={
-    onLoadMoreClick:PropTypes.func.isRequired,
+    onLoadMoreClick:PropTypes.func,
 }

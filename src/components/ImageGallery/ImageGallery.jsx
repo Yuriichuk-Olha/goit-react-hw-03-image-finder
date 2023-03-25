@@ -2,13 +2,11 @@ import PropTypes from 'prop-types';
 import React, {Component} from "react";
 
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
-import Button from "components/Button/Button";
 import css from 'components/ImageGallery/ImageGallery.module.css'
-
 
 class ImageGallery extends Component {
     render() { 
-        const { loading, images, clickImages,loadMore, onLoadMoreClick}= this.props
+        const {images,clickImages}= this.props
         
         return (
             <>
@@ -26,11 +24,6 @@ class ImageGallery extends Component {
               })}
             </ul> 
             
-            {!loading && (<Button 
-             loadMore={loadMore}
-            onLoadMoreClick={onLoadMoreClick}
-            />)} 
-         
         </>
         )
     }
